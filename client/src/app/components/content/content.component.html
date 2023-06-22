@@ -1,0 +1,120 @@
+<div class="h-full centered-flex justify-start flex-col relative m-auto">
+  <div
+    *ngIf="errorMessage"
+    class="w-full text-red-500 text-center break-all centered-flex bg-gray-200 dark:bg-gray-800 p-3"
+  >
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Content -->
+  <div class="max-w-3xl centered-flex flex-col p-5 w-3/4">
+    <!-- Header -->
+    <div
+      class="top-div mb-3 w-full flex items-stretch flex-wrap gap-2 justify-between"
+    >
+      <!-- Add new item -->
+      <button
+        class="text-sm bg-white text-black dark:bg-black dark:text-white rounded-xl p-2 border border-black dark:border-white"
+        (click)="addItem()"
+      >
+        Add New Item
+      </button>
+
+      <!-- Search form -->
+      <form
+        class="flex rounded-xl border border-black dark:border-white overflow-hidden"
+        (submit)="searchItems()"
+      >
+        <input
+          class="text-sm p-2 text-black dark:text-white bg-[white] dark:bg-[#1c1c1c] placeholder:text-gray-600"
+          name="search"
+          type="search"
+          placeholder="Search"
+          [(ngModel)]="searchTerm"
+        />
+        <button class="bg-gray-400 dark:bg-black" type="submit">
+          <fa-icon class="text-white p-2" [icon]="faSearch" size="1x"></fa-icon>
+        </button>
+      </form>
+
+      <!-- Filter form -->
+      <form
+        *ngIf="!loading && items.length > 0"
+        class="w-full flex flex-wrap justify-between items-stretch text-black dark:text-white mt-2 gap-2"
+        (ngSubmit)="filterItems()"
+      >
+        <div class="flex gap-2 items-stretch">
+          <label for="sort" class="self-center">Sort By</label>
+          <select
+            class="text-sm p-2 w-40 text-black dark:text-white bg-white dark:bg-black placeholder:text-gray-600"
+            name="sort"
+            id="sort"
+            [(ngModel)]="sortBy"
+          >
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+            <option value="createdAt">Date Created</option>
+            <option value="updatedAt">Date Modified</option>
+          </select>
+        </div>
+        <div class="flex gap-2 items-stretch">
+          <label for="order" class="self-center">Order</label>
+          <select
+            class="text-sm p-2 w-40 text-black dark:text-white bg-white dark:bg-black placeholder:text-gray-600"
+            name="order"
+            id="order"
+            [(ngModel)]="order"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+
+        <button
+          class="bg-gray-500 dark:bg-black text-white text-sm p-2"
+          type="submit"
+        >
+          Apply
+        </button>
+      </form>
+    </div>
+
+    <!-- Items List -->
+    <div *ngIf="loading" class="centered-flex pt-32 dark:text-white">
+      Loading...
+    </div>
+    <div *ngIf="!loading" class="w-full">
+      <div
+        *ngIf="items.length > 0"
+        class="flex flex-col rounded-[20px] border-black dark:border-white border-2 p-3 mt-1 w-full bg-white dark:bg-[#1c1c1c]"
+      >
+        <app-item
+          [ngClass]="
+            'border-solid border-black dark:border-white ' +
+            (i === items.length - 1 ? '' : 'border-b-2')
+          "
+          (itemDeleted)="itemDeleted($event)"
+          *ngFor="let item of items; let i = index"
+          [item]="item"
+        >
+        </app-item>
+      </div>
+
+      <div
+        *ngIf="items.length === 0"
+        class="flex flex-col rounded-2xl border-black dark:border-white border-2 p-3 mt-1 w-full bg-white dark:bg-gray-800"
+      >
+        <span class="dark:text-white text-center p-10">Nothing to show!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add modal -->
+  <div
+    *ngIf="addModalOpen"
+    class="centered-flex absolute backdrop-blur-sm inset-0 bg-black/[0.5] dark:bg-white/[0.5]"
+    (click)="backdropClicked($event)"
+  >
+    <app-add-item (itemAdded)="itemAdded($event)"></app-add-item>
+  </div>
+</div>

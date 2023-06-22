@@ -1,0 +1,113 @@
+<div class="centered-flex h-full p-5">
+  <div
+    class="max-w-[736px] container centered-flex lg:gap-5 h-full text-gray-800"
+  >
+    <!-- image -->
+    <div class="flex-[0.5] centered-flex">
+      <img class="w-[400px] h-[400px]" src="assets/auth.svg" alt="Auth" />
+    </div>
+
+    <!-- form -->
+    <div class="flex-[0.5]">
+      <form
+        class="flex flex-col gap-4 p-5"
+        [formGroup]="myForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- Email -->
+        <div>
+          <input
+            type="text"
+            maxlength="50"
+            class="w-full px-3 py-2 text-gray-700 dark:text-white bg-white dark:bg-gray-800 border border-solid border-gray-300 rounded focus:border-blue-600 transition ease-in-out"
+            placeholder="Email address"
+            formControlName="email"
+          />
+          <span
+            class="block text-red-500 text-sm mt-1"
+            *ngIf="email!.invalid && email!.touched"
+          >
+            Your email does not look right!
+          </span>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <input
+            type="password"
+            maxLength="20"
+            class="w-full px-3 py-2 text-gray-700 dark:text-white bg-white dark:bg-gray-800 border border-solid border-gray-300 rounded focus:border-blue-600 transition ease-in-out"
+            placeholder="Password"
+            formControlName="password"
+          />
+          <span
+            class="block text-red-500 text-sm mt-1"
+            *ngIf="password!.invalid && password!.touched"
+          >
+            Your password does not look right!
+          </span>
+        </div>
+
+        <!-- Signup only -->
+        <ng-container *ngIf="formType === 'signup'">
+          <!-- Role -->
+          <div class="flex">
+            <label htmlFor="role"></label>
+            <select
+              id="role"
+              formControlName="role"
+              class="w-full px-3 py-2 text-gray-700 dark:text-white bg-white dark:bg-gray-800 border border-solid border-gray-300 rounded focus:border-blue-600 transition ease-in-out"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            <span
+              class="block text-red-500 text-sm mt-1"
+              *ngIf="role!.invalid && role!.touched"
+            >
+              Your role does not look right!
+            </span>
+          </div>
+
+          <!-- Admin Key -->
+          <div>
+            <input
+              *ngIf="myForm.getRawValue().role === 'admin'"
+              type="text"
+              maxLength="50"
+              class="w-full px-3 py-2 text-gray-700 dark:text-white bg-white dark:bg-gray-800 border border-solid border-gray-300 rounded focus:border-blue-600 transition ease-in-out"
+              placeholder="Admin Key"
+              formControlName="adminKey"
+            />
+            <span
+              class="block text-red-500 text-sm mt-1"
+              *ngIf="adminKey!.invalid && adminKey!.touched"
+            >
+              Your admin key does not look right!
+            </span>
+          </div>
+        </ng-container>
+
+        <!-- Submit button -->
+        <button
+          type="submit"
+          class="w-full centered-flex py-2 bg-blue-600 text-white font-medium leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg active:bg-blue-800 active:shadow-lg dark:shadow-gray-800 transition ease-in-out"
+          [disabled]="loading"
+        >
+          <span *ngIf="loading"> Loading... </span>
+          <span *ngIf="!loading">
+            {{ formType === "signin" ? "Login" : "Signup" }}
+          </span>
+        </button>
+
+        <!-- Error Message -->
+        <p
+          *ngIf="errorMessage"
+          class="text-red-500 text-center w-full h-full break-words"
+        >
+          {{ errorMessage }}
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

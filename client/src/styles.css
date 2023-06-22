@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::after,
+  *::before {
+    @apply leading-none outline-none;
+  }
+
+  html {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+
+  body {
+    font-family: "exo", "open sans", "segoe ui";
+  }
+
+  input {
+    font-family: "open sans", "segoe ui";
+  }
+}
+
+@layer components {
+  .centered-flex {
+    @apply flex items-center justify-center;
+  }
+  .modal-input {
+    @apply w-full h-8 rounded-[5px] p-[5px];
+  }
+}

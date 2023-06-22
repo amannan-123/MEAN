@@ -1,0 +1,27 @@
+<div
+  class="flex items-center justify-between border-solid border-b-2 border-black dark:border-white last:border-b-0"
+>
+  <div class="text-black dark:text-white text-lg m-1">
+    <h1 class="py-1">{{ item.name }}</h1>
+    <h2 class="pb-1 text-xs text-gray-600 dark:text-gray-400">
+      {{ item.price }}
+    </h2>
+  </div>
+
+  <div class="centered-flex gap-3">
+    <button
+      class="centered-flex rounded-[5px] p-1 m-1 h-6 w-6 cursor-pointer text-[25px] leading-none text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
+      (click)="viewItem(item._id)"
+      [disabled]="item._id === ''"
+    >
+      <fa-icon [icon]="faEdit" size="xs"></fa-icon>
+    </button>
+    <button
+      class="centered-flex rounded-[5px] p-1 m-1 h-6 w-6 cursor-pointer text-[25px] leading-none text-white bg-[#ff1a1a] hover:bg-[#e60000] active:bg-[#cc0000]"
+      (click)="deleteItem(item)"
+      [disabled]="deleting"
+    >
+      <fa-icon [icon]="faClose" size="sm"></fa-icon>
+    </button>
+  </div>
+</div>
