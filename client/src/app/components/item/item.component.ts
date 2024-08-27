@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import Item from '../../models/item';
 import { ItemsService } from 'src/app/services/items.service';
-import { faClose, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class ItemComponent {
 	deleting: boolean = false;
 	faEdit = faEdit;
-	faClose = faClose;
+	faTrash = faTrash;
 
 	@Input() item!: Item;
 	@Output() itemDeleted: EventEmitter<string> =
